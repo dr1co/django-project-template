@@ -16,7 +16,7 @@ no tests.
 "Still a template" markers that should disappear once the project is defined:
 
 - `.env` — `DJANGO_DEBUG_MODE="True"` and `DJANGO_ALLOWED_HOSTS="*"` (read in
-  [core/settings.py:31-33](core/settings.py#L31-L33))
+  [core/settings.py:32-34](core/settings.py#L32-L34))
 - [app/templates/base.html:9](app/templates/base.html#L9) — placeholder title
   ("DON'T FORGET TO CHANGE THE APPLICATION TITLE!")
 - [app/templates/base.html](app/templates/base.html) — "New App" name, "N"
@@ -87,25 +87,46 @@ record it here.
 ```
 
 A new Django app must be registered in `INSTALLED_APPS`
-([core/settings.py:38-53](core/settings.py#L38-L53)) and have its urls included
+([core/settings.py:39-54](core/settings.py#L39-L54)) and have its urls included
 in [core/urls.py](core/urls.py).
 
 ---
 
 ## Code conventions
 
-**Follow these** — not "pure PEP 8" or the default `django-admin startproject`
-style.
-
 ### Python formatting
 
-- **2-space indentation** everywhere (code, dicts, lists). Django-inherited
-  exceptions to leave alone: `manage.py`, `core/wsgi.py`, `core/asgi.py`
-  (4 spaces) and `app/apps.py` (tabs).
-- Single quotes in config files (`settings.py`, `urls.py`), double quotes in
-  application code (views, context, decorators). Not strict — match the file
-  you're editing.
-- Two blank lines between conceptual blocks in `settings.py`.
+All Python follows **[PEP 8](https://peps.python.org/pep-0008/)**, and the
+whole codebase passes `flake8` with its defaults. Check before finishing a task:
+
+```bash
+pip install flake8             # dev tool, not in requirements.txt
+flake8 --exclude=theme,data,staticfiles .
+```
+
+- **4-space indentation**, no tabs — code, data structures and the examples
+  inside docstrings alike.
+- **79-character lines.** Break long strings with implicit concatenation
+  inside parentheses, not backslashes:
+  ```python
+  "NAME": (
+      "django.contrib.auth.password_validation."
+      "UserAttributeSimilarityValidator"
+  ),
+  ```
+- **Double quotes** for strings everywhere (PEP 8 only asks for consistency;
+  this is the project's choice). Single quotes only to avoid escaping.
+- Two blank lines around top-level functions and classes, one between
+  methods. Two blank lines between conceptual blocks in `settings.py`.
+- Imports in three groups separated by a blank line: standard library,
+  third-party (Django included), local (`from . import ...`). Import names you
+  use; scaffolding files that keep an unused Django import (e.g.
+  `from django.contrib import admin` in `admin.py`) mark it `# noqa: F401`.
+  Remove the marker once the import is used.
+- Trailing commas in multi-line collections and calls.
+- No trailing whitespace, and files end with a single newline.
+- `manage.py`, `core/wsgi.py` and `core/asgi.py` are Django-generated and
+  already conform; leave them as they are.
 
 ### Language
 
@@ -113,7 +134,7 @@ style.
   including function, variable, and route names (`home_view`,
   `logged_in_view`, `current_user`, `user_data`). Templates use
   `<html lang="en">`.
-- `LANGUAGE_CODE = 'en-us'` and `TIME_ZONE = 'UTC'` keep Django's defaults. If
+- `LANGUAGE_CODE = "en-us"` and `TIME_ZONE = "UTC"` keep Django's defaults. If
   real localization is needed, adjust and record it here.
 
 ### Module docstrings — an important pattern
@@ -148,8 +169,8 @@ invite line; never delete the docstring.
 - Routes live in `app/urls.py`; `core/urls.py` only does `include`.
 - `name=` mirrors the view name and the path mirrors the route (convention
   stated in the file itself):
-  `path('logged-in', views.logged_in_view, name="logged_in_view")`.
-- No trailing slash (`'logged-in'`, not `'logged-in/'`); multi-word paths use
+  `path("logged-in", views.logged_in_view, name="logged_in_view")`.
+- No trailing slash (`"logged-in"`, not `"logged-in/"`); multi-word paths use
   hyphens.
 - API paths always start with the `api` prefix and follow the scope of the
   service or rule — e.g. an ERP query lives under
@@ -163,10 +184,10 @@ sessions are handled manually:
 - Login = write `request.session["user_data"]`; logout =
   `request.session.flush()`.
 - View protection = `@auth_required`
-  ([app/decorators.py:22](app/decorators.py#L22)), which redirects to `/` when
+  ([app/decorators.py:24](app/decorators.py#L24)), which redirects to `/` when
   `user_data` is absent.
 - The `global_data` context processor
-  ([app/context.py:32](app/context.py#L32)) injects `current_user` into **all**
+  ([app/context.py:33](app/context.py#L33)) injects `current_user` into **all**
   templates (not `user`, which would shadow `django.contrib.auth`'s variable).
 - Templates check `{% if request.session.user_data %}` to show/hide the sidebar.
 
@@ -188,7 +209,7 @@ close.
 Two paths, documented in [app/models.py](app/models.py):
 
 1. **Django ORM** — local tables. Always define `class Meta: db_table =
-   'tb_name'` explicitly.
+   "tb_name"` explicitly.
 2. **`BaseDBConnector`** — external/legacy databases (ERPs, data warehouses,
    third-party systems) via SQLAlchemy + raw SQL. Subclass it, build
    `self.conn_string` in `__init__`, and add specific methods that call the
@@ -394,7 +415,7 @@ alongside it, without real values.
 
 - [ ] `DJANGO_DEBUG_MODE="False"` in the server's `.env`
 - [ ] `DJANGO_ALLOWED_HOSTS` with real hosts, no `"*"`
-- [ ] Comment out `path('admin/', ...)` in
+- [ ] Comment out `path("admin/", ...)` in
       [core/urls.py:26](core/urls.py#L26) if admin isn't used
 - [ ] Real `SECRET_KEY` in the server's `.env`
 - [ ] Title, name, symbol, subtitle, footer, logo, and favicon in `base.html`

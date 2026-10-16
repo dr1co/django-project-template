@@ -6,7 +6,7 @@ defining functions that inject global variables into ALL HTML templates
 automatically, without having to pass them explicitly in each view.
 
 For these functions to work, they must be registered in the
-'OPTIONS -> context_processors' list inside the TEMPLATES setting in your
+"OPTIONS -> context_processors" list inside the TEMPLATES setting in your
 `core/settings.py`.
 
 How it works:
@@ -15,12 +15,12 @@ return a Python dictionary (dict). The keys of this dictionary become
 available as variables in Django Templates.
 
 Below is an example for the logged-in user context. The default shape of
-'user_data' looks like this:
+"user_data" looks like this:
 
 user_data = {
-  "user_reg": user's registration number,
-  "name": name,
-  "email": email
+    "user_reg": user's registration number,
+    "name": name,
+    "email": email,
 }
 
 The variable is exposed as `current_user` (not `user`) so it doesn't shadow
@@ -29,11 +29,12 @@ the `user` variable from django.contrib.auth's context processor.
 
 # Create your context processors here.
 
+
 def global_data(request):
-  user = request.session.get("user_data", None)
+    user = request.session.get("user_data", None)
 
-  context = {
-    "current_user": user,
-  }
+    context = {
+        "current_user": user,
+    }
 
-  return context
+    return context

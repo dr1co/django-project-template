@@ -54,7 +54,7 @@ echo "Applying the design system to the Tailwind source..."
 cp /app/generator/tailwind/styles.css theme/static_src/src/styles.css
 
 echo "Enabling the 'theme' module in settings.py..."
-sed -i "s/# #TAILWIND_THEME_PLACEHOLDER#/'theme',/g" "core/settings.py"
+sed -i 's/# #TAILWIND_THEME_PLACEHOLDER#/"theme",/g' "core/settings.py"
 
 echo "Building the TailwindCSS file..."
 python manage.py tailwind install

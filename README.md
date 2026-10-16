@@ -29,26 +29,15 @@ developing.
 - Read access to the image on GHCR (if the package is private, a token with
   the `read:packages` scope)
 
-> In the commands below, replace `<owner>/<repo>` with this repository's
-> owner and name on GitHub (lowercase).
-
 ## Usage
 
-### 1. (If the package is private) Authenticate Docker with GHCR
-
-Using the [GitHub CLI](https://cli.github.com/):
+### 1. Pull the image
 
 ```bash
-gh auth token | docker login ghcr.io -u YOUR_GITHUB_USERNAME --password-stdin
+docker pull ghcr.io/dr1co/django-project-template:latest
 ```
 
-### 2. Pull the image
-
-```bash
-docker pull ghcr.io/<owner>/<repo>:latest
-```
-
-### 3. Generate a new project
+### 2. Generate a new project
 
 The image creates the project inside `/app/<project-name>`. Mount a volume
 pointing to that same path so the generated files are available on your
@@ -57,7 +46,7 @@ machine:
 ```bash
 docker run --rm -it \
   -v "$PWD/my_project:/app/my_project" \
-  ghcr.io/<owner>/<repo>:latest my_project
+  ghcr.io/dr1co/django-project-template:latest my_project
 ```
 
 Without the final argument, the script asks for the name interactively
@@ -67,7 +56,7 @@ type.
 When it finishes, the project will be available at `./my_project`, ready to be
 opened and versioned.
 
-### 4. Run the generated project
+### 3. Run the generated project
 
 ```bash
 cd my_project
@@ -97,6 +86,6 @@ docker compose up --build      # http://localhost:8080 (port via HTTP_PORT in .e
 ## CI/CD
 
 The [`docker-publish.yml`](.github/workflows/docker-publish.yml) workflow
-automatically builds and publishes the image to `ghcr.io/<owner>/<repo>:latest`
+automatically builds and publishes the image to `ghcr.io/dr1co/django-project-template:latest`
 on every push to the `main` branch. The image name is derived from the
 repository itself, so no extra configuration is needed in a fork.

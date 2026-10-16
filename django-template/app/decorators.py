@@ -15,18 +15,20 @@ We use `functools.wraps` to preserve the original function's metadata.
 Below is an example using the user context.
 """
 from functools import wraps
+
 from django.shortcuts import redirect
 
 # Create your decorators here.
 
+
 def auth_required(view_func):
-  @wraps(view_func)
-  def _wrapped_view(request, *args, **kwargs):
-    user_data = request.session.get('user_data', None)
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        user_data = request.session.get("user_data", None)
 
-    if not user_data:
-      return redirect('/')
+        if not user_data:
+            return redirect("/")
 
-    return view_func(request, *args, **kwargs)
+        return view_func(request, *args, **kwargs)
 
-  return _wrapped_view
+    return _wrapped_view
