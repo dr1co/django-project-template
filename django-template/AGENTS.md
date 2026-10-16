@@ -19,10 +19,17 @@ no tests.
   [core/settings.py:32-34](core/settings.py#L32-L34))
 - [app/templates/base.html:9](app/templates/base.html#L9) — placeholder title
   ("DON'T FORGET TO CHANGE THE APPLICATION TITLE!")
-- [app/templates/base.html](app/templates/base.html) — "New App" name, "N"
-  symbol and "Application subtitle" placeholders (sidebar header **and** top
-  bar), plus the "New App" footer; no logo or favicon yet
-  (`app/static/app/assets/` is empty)
+- [app/templates/base.html](app/templates/base.html) — uses the template's
+  "Django Enterprise" brand: favicon, logo in the top bar and sidebar header,
+  and the footer. Replace them with the application's own identity. Brand
+  assets in `app/static/app/assets/`:
+  - `logo.svg` — primary logo, transparent (light surfaces; top bar in light
+    theme)
+  - `logo-inverse.svg` — light logo, transparent (dark surfaces; sidebar, and
+    top bar in dark theme)
+  - `logo-dark.svg` — logo on its own navy panel (standalone use: docs,
+    slides, social)
+  - `icon.svg` — app icon / favicon (navy); `icon-light.svg` — light variant
 - [app/templates/home.html](app/templates/home.html) — generator landing page
   with a component reference (buttons, badges, form, table); replace it
 - [app/templates/base.html](app/templates/base.html) sidebar — example
@@ -427,8 +434,8 @@ alongside it, without real values.
 - [ ] Comment out `path("admin/", ...)` in
       [core/urls.py:26](core/urls.py#L26) if admin isn't used
 - [ ] Real `SECRET_KEY` in the server's `.env`
-- [ ] Title, name, symbol, subtitle, footer, logo, and favicon in `base.html`
-      set; `home.html` replaced
+- [ ] Title, logos, favicon, and footer in `base.html` replaced with the
+      application's identity; `home.html` replaced
 - [ ] Accent color / tokens adjusted in `theme/static_src/src/styles.css`, if
       the app has its own identity (see visual identity §18)
 - [ ] Real menu items and correct `url_name`s in the sidebar

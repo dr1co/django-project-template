@@ -7,6 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}DON'T FORGET TO CHANGE THE APPLICATION TITLE!{% endblock %}</title>
+  <link rel="icon" type="image/svg+xml" href="{% static 'app/assets/icon.svg' %}">
 
   <!-- Applies the saved (or system) theme before the first paint, avoiding a flash. -->
   <script>
@@ -38,12 +39,10 @@
   <aside id="sidebar"
     class="fixed inset-y-0 left-0 z-40 flex w-64 -translate-x-full flex-col border-r border-sidebar-line bg-sidebar text-sidebar-fg transition-transform duration-200 lg:translate-x-0">
 
-    <div class="flex h-16 shrink-0 items-center gap-3 border-b border-sidebar-line px-5">
-      <span class="flex size-8 items-center justify-center rounded-md bg-white/10 font-display text-sm font-bold">N</span>
-      <div class="leading-tight">
-        <p class="font-display text-sm font-semibold">New App</p>
-        <p class="text-xs text-sidebar-muted">Application subtitle</p>
-      </div>
+    <div class="flex h-16 shrink-0 items-center border-b border-sidebar-line px-5">
+      <a href="/" class="rounded-md">
+        <img src="{% static 'app/assets/logo-inverse.svg' %}" alt="Django Enterprise" class="h-8 w-auto">
+      </a>
     </div>
 
     <nav class="flex-1 overflow-y-auto px-3 py-4" aria-label="Main">
@@ -149,13 +148,10 @@
         </button>
         {% endif %}
 
-        <a href="/" class="flex items-center gap-3 {% if request.session.user_data %}lg:hidden{% endif %}">
-          <span
-            class="flex size-8 items-center justify-center rounded-md bg-navy font-display text-sm font-bold text-white">N</span>
-          <span class="leading-tight">
-            <span class="block font-display text-sm font-semibold text-brand">New App</span>
-            <span class="block text-xs text-fg-muted">Application subtitle</span>
-          </span>
+        <a href="/" class="rounded-md {% if request.session.user_data %}lg:hidden{% endif %}">
+          <img src="{% static 'app/assets/logo.svg' %}" alt="Django Enterprise" class="h-8 w-auto dark:hidden">
+          <img src="{% static 'app/assets/logo-inverse.svg' %}" alt="Django Enterprise"
+            class="hidden h-8 w-auto dark:block">
         </a>
 
         <div class="ml-auto flex items-center gap-1">
@@ -221,7 +217,7 @@
 
     <footer class="border-t border-line">
       <div class="px-4 py-6 text-center text-xs text-fg-muted sm:px-6 lg:px-8">
-        &copy; {% now "Y" %} New App. All rights reserved.
+        &copy; {% now "Y" %} Django Enterprise. All rights reserved.
       </div>
     </footer>
   </div>
