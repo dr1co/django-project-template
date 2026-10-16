@@ -1,0 +1,341 @@
+/*
+ * Design system — "Premium Minimal" (see docs/visual-identity.md).
+ *
+ * The generator copies this file over theme/static_src/src/styles.css right
+ * after `tailwind init`, so every generated project starts with it.
+ *
+ * Structure:
+ *   1. Runtime tokens (:root / [data-theme="dark"]) — the ONLY place raw
+ *      theme colors live. Change the identity here, not in templates.
+ *   2. @theme — exposes the tokens as Tailwind utilities
+ *      (bg-canvas, bg-surface, text-fg, border-line, bg-accent...).
+ *   3. Base layer — typography, focus ring, reduced motion.
+ *   4. Components — buttons, cards, badges, alerts, forms, tables, loaders.
+ *
+ * Contrast: every text/background pair below was checked against WCAG AA
+ * (4.5:1). Two values deviate slightly from the identity document to pass:
+ * muted text (#747B82 -> #6B7279) and success text (#287D58 -> #24734F).
+ */
+
+@import "tailwindcss";
+
+/*
+ * A catch-all path to Django template files, JavaScript, and Python files
+ * that contain Tailwind CSS classes and will be scanned by Tailwind.
+ */
+@source "../../../**/*.{html,py,js}";
+
+/* Dark mode follows data-theme on <html> (set by the script in base.html). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+
+/* ==========================================================================
+   1. Runtime tokens
+   ========================================================================== */
+
+:root {
+  /* Surfaces */
+  --ui-canvas: #F4F6F8;
+  --ui-surface: #FFFFFF;
+  --ui-surface-secondary: #E9EEF3;
+  --ui-surface-elevated: #FFFFFF;
+  --ui-line: #D9E0E7;
+
+  /* Text */
+  --ui-fg: #202B38;
+  --ui-fg-secondary: #526174;
+  --ui-fg-muted: #6B7279;
+
+  /* Brand and interaction */
+  --ui-brand: #26374A;
+  --ui-accent: #526D8A;
+  --ui-accent-hover: #45607C;
+  --ui-on-accent: #FFFFFF;
+
+  /* Navigation shell (dark sidebar variant) */
+  --ui-sidebar: #26374A;
+  --ui-sidebar-fg: #E5EBF2;
+  --ui-sidebar-muted: #B3C0CE;
+  --ui-sidebar-line: #354353;
+
+  /* Semantic */
+  --ui-success: #24734F;
+  --ui-success-subtle: #E5F4EC;
+  --ui-warning: #946719;
+  --ui-warning-subtle: #FFF3D8;
+  --ui-danger: #B84242;
+  --ui-danger-subtle: #FBE9E9;
+  --ui-info: #3C6D9A;
+  --ui-info-subtle: #E8F0FA;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --ui-canvas: #171F29;
+  --ui-surface: #202B38;
+  --ui-surface-secondary: #26374A;
+  --ui-surface-elevated: #26374A;
+  --ui-line: #354353;
+
+  --ui-fg: #E5EBF2;
+  --ui-fg-secondary: #B3C0CE;
+  --ui-fg-muted: #9AA7B5;
+
+  --ui-brand: #E5EBF2;
+  --ui-accent: #91A9C3;
+  --ui-accent-hover: #A9BDD2;
+  --ui-on-accent: #171F29;
+
+  --ui-sidebar: #202B38;
+  --ui-sidebar-fg: #E5EBF2;
+  --ui-sidebar-muted: #B3C0CE;
+  --ui-sidebar-line: #354353;
+
+  --ui-success: #6CC59B;
+  --ui-success-subtle: #1B3A2E;
+  --ui-warning: #E0B45E;
+  --ui-warning-subtle: #3B2F17;
+  --ui-danger: #EE8E8E;
+  --ui-danger-subtle: #44242A;
+  --ui-info: #8DB4DE;
+  --ui-info-subtle: #1E3249;
+
+  color-scheme: dark;
+}
+
+
+/* ==========================================================================
+   2. Tailwind theme
+   ========================================================================== */
+
+/* Theme-aware colors: utilities resolve the runtime tokens above. */
+@theme inline {
+  --color-canvas: var(--ui-canvas);
+  --color-surface: var(--ui-surface);
+  --color-surface-secondary: var(--ui-surface-secondary);
+  --color-surface-elevated: var(--ui-surface-elevated);
+  --color-line: var(--ui-line);
+
+  --color-fg: var(--ui-fg);
+  --color-fg-secondary: var(--ui-fg-secondary);
+  --color-fg-muted: var(--ui-fg-muted);
+
+  --color-brand: var(--ui-brand);
+  --color-accent: var(--ui-accent);
+  --color-accent-hover: var(--ui-accent-hover);
+  --color-on-accent: var(--ui-on-accent);
+
+  --color-sidebar: var(--ui-sidebar);
+  --color-sidebar-fg: var(--ui-sidebar-fg);
+  --color-sidebar-muted: var(--ui-sidebar-muted);
+  --color-sidebar-line: var(--ui-sidebar-line);
+
+  --color-success: var(--ui-success);
+  --color-success-subtle: var(--ui-success-subtle);
+  --color-warning: var(--ui-warning);
+  --color-warning-subtle: var(--ui-warning-subtle);
+  --color-danger: var(--ui-danger);
+  --color-danger-subtle: var(--ui-danger-subtle);
+  --color-info: var(--ui-info);
+  --color-info-subtle: var(--ui-info-subtle);
+}
+
+@theme {
+  /* Fixed institutional palette (same in both themes). */
+  --color-navy: #26374A;
+  --color-steel: #526D8A;
+  --color-mist: #E9EEF3;
+
+  /* Neutral scale from the identity document (replaces Tailwind's). */
+  --color-neutral-*: initial;
+  --color-neutral-950: #202B38;
+  --color-neutral-800: #354353;
+  --color-neutral-600: #526174;
+  --color-neutral-500: #6B7279;
+  --color-neutral-300: #D9E0E7;
+  --color-neutral-100: #F4F6F8;
+  --color-neutral-50: #FFFFFF;
+
+  /* Typography: Inter (UI), Manrope (display headings/metrics), JetBrains Mono (technical). */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Type scale: Tailwind's defaults already match, except 4xl's line height. */
+  --text-4xl--line-height: 2.75rem;
+
+  /* Geometry */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-card: 10px;
+  --radius-lg: 12px;
+
+  /* Elevation: cards have none; shadows are only for floating surfaces. */
+  --shadow-popover: 0 8px 24px -6px rgb(32 43 56 / 0.16), 0 2px 6px -2px rgb(32 43 56 / 0.08);
+
+  /* Motion */
+  --default-transition-duration: 150ms;
+}
+
+
+/* ==========================================================================
+   3. Base
+   ========================================================================== */
+
+@layer base {
+  body {
+    @apply bg-canvas font-sans text-fg antialiased;
+  }
+
+  code, kbd, samp, pre {
+    font-family: var(--font-mono);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ui-accent);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+
+/* ==========================================================================
+   4. Components
+   ========================================================================== */
+
+@layer components {
+  /* ---- Buttons: .btn + one variant (.btn-primary / -secondary / -ghost / -danger) */
+  .btn {
+    @apply inline-flex h-10 items-center justify-center gap-2 rounded-md px-4 text-sm font-medium whitespace-nowrap transition-colors duration-150 select-none;
+    @apply disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50;
+  }
+  .btn-sm {
+    @apply h-8 px-3 text-xs;
+  }
+  .btn-primary {
+    @apply bg-accent text-on-accent hover:bg-accent-hover;
+  }
+  .btn-secondary {
+    @apply border border-line bg-surface text-fg hover:bg-surface-secondary;
+  }
+  .btn-ghost {
+    @apply text-fg-secondary hover:bg-surface-secondary hover:text-fg;
+  }
+  .btn-danger {
+    @apply border border-danger/30 bg-danger-subtle text-danger hover:border-danger/60;
+  }
+
+  /* ---- Cards: subtle border, no shadow (identity §8) */
+  .card {
+    @apply rounded-card border border-line bg-surface p-6;
+  }
+  .card-compact {
+    @apply p-5;
+  }
+  .card-interactive {
+    @apply transition-colors duration-150 hover:border-accent/60 hover:bg-surface-secondary/40;
+  }
+
+  /* ---- Page header (identity §12.3) */
+  .page-title {
+    @apply font-display text-2xl font-semibold tracking-tight text-fg sm:text-3xl;
+  }
+  .page-description {
+    @apply mt-1 text-sm text-fg-secondary;
+  }
+  .section-title {
+    @apply text-sm font-semibold text-fg;
+  }
+
+  /* ---- Badges: .badge + one variant */
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-sm px-2 py-0.5 text-xs font-medium;
+  }
+  .badge-neutral { @apply bg-surface-secondary text-fg-secondary; }
+  .badge-success { @apply bg-success-subtle text-success; }
+  .badge-warning { @apply bg-warning-subtle text-warning; }
+  .badge-danger  { @apply bg-danger-subtle text-danger; }
+  .badge-info    { @apply bg-info-subtle text-info; }
+
+  /* ---- Alerts (Django messages): .alert + one variant */
+  .alert {
+    @apply flex items-start gap-3 rounded-md border px-4 py-3 text-sm;
+  }
+  .alert-success { @apply border-success/25 bg-success-subtle text-success; }
+  .alert-warning { @apply border-warning/25 bg-warning-subtle text-warning; }
+  .alert-danger  { @apply border-danger/25 bg-danger-subtle text-danger; }
+  .alert-info    { @apply border-info/25 bg-info-subtle text-info; }
+
+  /* ---- Forms: label above field, placeholder never replaces it (identity §10) */
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-fg;
+  }
+  .input {
+    @apply block h-10 w-full rounded-md border border-line bg-surface px-3 text-sm text-fg transition-colors duration-150 placeholder:text-fg-muted;
+    @apply focus:border-accent focus:ring-3 focus:ring-accent/20 focus:outline-none;
+    @apply disabled:cursor-not-allowed disabled:bg-surface-secondary disabled:text-fg-muted;
+    @apply aria-invalid:border-danger aria-invalid:focus:ring-danger/20;
+  }
+  textarea.input {
+    @apply h-auto min-h-24 py-2;
+  }
+  .help-text {
+    @apply mt-1.5 text-xs text-fg-muted;
+  }
+  .field-error {
+    @apply mt-1.5 text-xs text-danger;
+  }
+
+  /* ---- Tables: horizontal dividers only (identity §11) */
+  .table {
+    @apply w-full text-left text-sm;
+  }
+  .table th {
+    @apply border-b border-line px-4 py-3 text-xs font-medium tracking-wide text-fg-muted uppercase;
+  }
+  .table td {
+    @apply border-b border-line px-4 py-3 text-fg;
+  }
+  .table tbody tr:last-child td {
+    @apply border-b-0;
+  }
+  .table tbody tr {
+    @apply transition-colors duration-150 hover:bg-surface-secondary/50;
+  }
+
+  /* ---- Loaders */
+  .loader,
+  .loader-white {
+    --c: var(--ui-accent) 90deg, #0000 0;
+    width: 90px;
+    height: 14px;
+    background:
+      conic-gradient(from 135deg at top, var(--c)) 0 0,
+      conic-gradient(from -45deg at bottom, var(--c)) 0 100%;
+    background-size: calc(100% / 4) 50%;
+    background-repeat: repeat-x;
+    animation: loader-wave 1s infinite;
+  }
+  .loader-white {
+    --c: #fff 90deg, #0000 0;
+  }
+  .loader-spinner {
+    @apply inline-block size-5 animate-spin rounded-full border-2 border-line border-t-accent;
+  }
+}
+
+@keyframes loader-wave {
+  80%,
+  100% {
+    background-position: calc(100% / 3) 0, calc(100% / -3) 100%;
+  }
+}

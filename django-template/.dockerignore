@@ -1,0 +1,42 @@
+# ==========================================
+# Virtual Environments, Cache and Dependencies
+# ==========================================
+venv/
+.venv/
+.env.example
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+
+# ==========================================
+# Secrets and Local Settings (CRITICAL)
+# ==========================================
+.env
+.env.local
+
+# ==========================================
+# Git and Docker Files
+# ==========================================
+.git/
+.gitignore
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# ==========================================
+# Local Django and Tailwind Data
+# ==========================================
+**/data/
+**/db.sqlite3
+**/theme/bin/
+**/theme/static/css/dist/
+django_cache/
+
+# ==========================================
+# System and IDE Files
+# ==========================================
+.vscode/
+.idea/
+**/.DS_Store
+**/Thumbs.db

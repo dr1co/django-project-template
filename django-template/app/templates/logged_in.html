@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Logged-In Area - Test{% endblock %}
+
+{% block page_header %}
+<div class="mb-8">
+  <h1 class="page-title">Overview</h1>
+  <p class="page-description">An example screen extending <code class="text-xs">base.html</code> with an active
+    session.</p>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
+
+  <section class="card lg:col-span-2" aria-labelledby="session-heading">
+    <div class="mb-5 flex items-start justify-between gap-4">
+      <div>
+        <h2 id="session-heading" class="text-lg font-semibold text-fg">Active session</h2>
+        <p class="mt-1 text-sm text-fg-secondary">The user identified in <code class="text-xs">user_data</code>.</p>
+      </div>
+      <span class="badge badge-success">
+        <span class="size-1.5 rounded-full bg-current" aria-hidden="true"></span>
+        Logged in
+      </span>
+    </div>
+
+    <dl class="divide-y divide-line border-t border-line text-sm">
+      <div class="grid grid-cols-3 gap-4 py-3">
+        <dt class="text-fg-muted">Name</dt>
+        <dd class="col-span-2 font-medium text-fg">{{ current_user.name }}</dd>
+      </div>
+      <div class="grid grid-cols-3 gap-4 py-3">
+        <dt class="text-fg-muted">Email</dt>
+        <dd class="col-span-2 text-fg">{{ current_user.email }}</dd>
+      </div>
+      <div class="grid grid-cols-3 gap-4 py-3">
+        <dt class="text-fg-muted">Registration</dt>
+        <dd class="col-span-2 font-mono text-xs text-fg">{{ current_user.user_reg }}</dd>
+      </div>
+    </dl>
+
+    <div class="mt-6 flex flex-wrap gap-2">
+      <a href="/" id="back-button" class="btn btn-secondary">Back to home</a>
+      <a href="/logged-out" class="btn btn-ghost">End session</a>
+    </div>
+  </section>
+
+  <section class="card card-compact" aria-labelledby="metric-heading">
+    <h2 id="metric-heading" class="text-sm text-fg-secondary">Total requests</h2>
+    <p class="mt-2 font-display text-3xl font-semibold tracking-tight text-fg tabular-nums">12,840</p>
+    <p class="mt-1 text-xs text-success">
+      <span aria-hidden="true">↑</span> +8.2% <span class="text-fg-muted">vs. previous period</span>
+    </p>
+    <p class="mt-6 border-t border-line pt-4 text-xs text-fg-muted">
+      The sidebar and its layout offset are enabled automatically while a session exists.
+    </p>
+  </section>
+
+</div>
+{% endblock %}

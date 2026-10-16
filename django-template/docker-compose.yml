@@ -1,0 +1,33 @@
+services:
+  web:
+    build: .
+    expose:
+      - 8000
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+      - django_sqlite_data:/app/data
+    env_file:
+      - .env
+    command: gunicorn --bind 0.0.0.0:8000 core.wsgi:application --workers 5 --timeout 300
+    healthcheck:
+      test: [ "CMD-SHELL", "python manage.py check || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile.nginx
+    ports:
+      - "${HTTP_PORT:-8080}:80"
+    volumes:
+      - static_volume:/app/staticfiles
+    depends_on:
+      web:
+        condition: service_healthy
+
+volumes:
+  static_volume:
+  django_sqlite_data:

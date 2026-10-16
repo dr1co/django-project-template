@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome to Your New Django Project{% endblock %}
+
+{% block page_header %}
+<div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+  <div>
+    <span class="badge badge-success mb-3">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+        class="size-3.5" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+      </svg>
+      Generated
+    </span>
+    <h1 class="page-title">Your Django project is ready</h1>
+    <p class="page-description">Base structure created successfully. Pick a screen below to preview the layout.</p>
+  </div>
+  <a href="/logged-in" class="btn btn-primary">Open the app shell</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="space-y-10">
+
+  <section aria-labelledby="preview-heading">
+    <h2 id="preview-heading" class="section-title mb-3">Interface preview</h2>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+
+      <a href="/logged-out" class="card card-interactive group flex items-start gap-4">
+        <span class="flex size-10 shrink-0 items-center justify-center rounded-md bg-surface-secondary text-brand">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="size-5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+          </svg>
+        </span>
+        <span>
+          <span class="block font-semibold text-fg">Logged-out screen</span>
+          <span class="mt-1 block text-sm text-fg-secondary">The public experience, without the sidebar.</span>
+        </span>
+      </a>
+
+      <a href="/logged-in" class="card card-interactive group flex items-start gap-4">
+        <span class="flex size-10 shrink-0 items-center justify-center rounded-md bg-surface-secondary text-brand">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="size-5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+          </svg>
+        </span>
+        <span>
+          <span class="block font-semibold text-fg">Logged-in screen</span>
+          <span class="mt-1 block text-sm text-fg-secondary">A session with <code
+              class="text-xs">user_data</code> set and the navigation visible.</span>
+        </span>
+      </a>
+
+    </div>
+  </section>
+
+  <section aria-labelledby="included-heading">
+    <h2 id="included-heading" class="section-title mb-3">Included in the template</h2>
+    <div class="card p-0">
+      <ul class="divide-y divide-line">
+        <li class="flex items-start gap-3 px-6 py-4">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+            stroke="currentColor" class="mt-0.5 size-4 shrink-0 text-success" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+          </svg>
+          <div>
+            <p class="text-sm font-medium text-fg">Clean root structure</p>
+            <p class="text-sm text-fg-secondary"><code class="text-xs">core/</code> and <code
+                class="text-xs">manage.py</code> live at the project root.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3 px-6 py-4">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+            stroke="currentColor" class="mt-0.5 size-4 shrink-0 text-success" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+          </svg>
+          <div>
+            <p class="text-sm font-medium text-fg">Environment-based settings</p>
+            <p class="text-sm text-fg-secondary">Secrets, debug mode and hosts come from <code
+                class="text-xs">.env</code>, ready for deployment.</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3 px-6 py-4">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+            stroke="currentColor" class="mt-0.5 size-4 shrink-0 text-success" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+          </svg>
+          <div>
+            <p class="text-sm font-medium text-fg">Design system</p>
+            <p class="text-sm text-fg-secondary">Tokens, light and dark themes and components in <code
+                class="text-xs">theme/static_src/src/styles.css</code>.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section aria-labelledby="components-heading">
+    <h2 id="components-heading" class="section-title mb-3">Components</h2>
+    <div class="card space-y-6">
+
+      <div>
+        <p class="mb-2 text-xs font-medium text-fg-muted">Buttons</p>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" class="btn btn-primary">Primary</button>
+          <button type="button" class="btn btn-secondary">Secondary</button>
+          <button type="button" class="btn btn-ghost">Ghost</button>
+          <button type="button" class="btn btn-danger">Delete</button>
+          <button type="button" class="btn btn-primary" disabled>Disabled</button>
+          <button type="button" class="btn btn-secondary" aria-busy="true">
+            <span class="loader-spinner size-4" aria-hidden="true"></span>
+            Loading
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <p class="mb-2 text-xs font-medium text-fg-muted">Badges</p>
+        <div class="flex flex-wrap gap-2">
+          <span class="badge badge-neutral">Draft</span>
+          <span class="badge badge-success">Completed</span>
+          <span class="badge badge-warning">Pending</span>
+          <span class="badge badge-danger">Failed</span>
+          <span class="badge badge-info">Scheduled</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label for="example-name" class="label">Name</label>
+          <input id="example-name" type="text" class="input" placeholder="e.g. Jane Doe">
+          <p class="help-text">Shown on your profile.</p>
+        </div>
+        <div>
+          <label for="example-email" class="label">Email</label>
+          <input id="example-email" type="email" class="input" value="not-an-email" aria-invalid="true"
+            aria-describedby="example-email-error">
+          <p id="example-email-error" class="field-error">Enter a valid email address.</p>
+        </div>
+      </div>
+
+      <div class="-mx-6 overflow-x-auto border-t border-line">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Request</th>
+              <th scope="col">Status</th>
+              <th scope="col" class="text-right">Duration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-mono text-xs">REQ-1042</td>
+              <td><span class="badge badge-success">Completed</span></td>
+              <td class="text-right tabular-nums">128 ms</td>
+            </tr>
+            <tr>
+              <td class="font-mono text-xs">REQ-1043</td>
+              <td><span class="badge badge-danger">Failed</span></td>
+              <td class="text-right tabular-nums">2,410 ms</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+{% endblock %}
