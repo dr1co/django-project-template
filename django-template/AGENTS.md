@@ -377,6 +377,15 @@ docker compose logs -f web
 [entrypoint.sh](entrypoint.sh) runs automatically:
 `migrate` → `createcachetable` → `tailwind build` → `collectstatic` → gunicorn.
 
+The `web` container runs as root with the project folder bind-mounted at
+`/app`; the entrypoint hands the Tailwind build output back to the folder's
+owner. For commands that **create files in the project** (`makemigrations`,
+`startapp`...), run them as your user so the files aren't root-owned:
+
+```bash
+docker compose exec --user "$(id -u):$(id -g)" web python manage.py makemigrations app
+```
+
 ### Local
 
 ```bash

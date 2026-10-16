@@ -39,22 +39,21 @@ docker pull ghcr.io/dr1co/django-project-template:latest
 
 ### 2. Generate a new project
 
-The image creates the project inside `/app/<project-name>`. Mount a volume
-pointing to that same path so the generated files are available on your
-machine:
+The image creates the project inside `/workspace/<project-name>`. Mount your
+current directory there so the generated files land on your machine:
 
 ```bash
 docker run --rm -it \
-  -v "$PWD/my_project:/app/my_project" \
+  -v "$PWD:/workspace" \
   ghcr.io/dr1co/django-project-template:latest my_project
 ```
 
 Without the final argument, the script asks for the name interactively
-(default: `main_app`) — in that case, mount the volume using the same name you
-type.
+(default: `main_app`).
 
 When it finishes, the project will be available at `./my_project`, ready to be
-opened and versioned.
+opened and versioned. The generated files are owned by the owner of the
+mounted directory (you), not by the container's root user.
 
 ### 3. Run the generated project
 

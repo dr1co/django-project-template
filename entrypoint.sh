@@ -5,6 +5,14 @@ set -e
 
 ARG_1=$1
 
+# Without a host directory mounted here, the project would be created inside
+# the container and lost when it exits.
+if ! grep -qs " $(pwd) " /proc/mounts; then
+  echo "Error: no host directory is mounted at $(pwd)." >&2
+  echo "Run the generator with: docker run --rm -it -v \"\$PWD:$(pwd)\" <image> [project_name]" >&2
+  exit 1
+fi
+
 if [ -z "$ARG_1" ]; then
   echo "======================="
   echo "=== DJANGO TEMPLATE ==="
@@ -18,9 +26,22 @@ else
   APP_NAME=$ARG_1
 fi
 
+WORKSPACE=$(pwd)
+PROJECT_DIR="$WORKSPACE/$APP_NAME"
+
+# The container runs as root, so everything it creates would be root-owned on
+# the host. On exit (success or failure), hand the project over to whoever owns
+# the mounted directory, i.e. the user who ran `docker run`.
+fix_ownership() {
+  if [ -d "$PROJECT_DIR" ]; then
+    chown -R "$(stat -c '%u:%g' "$WORKSPACE")" "$PROJECT_DIR"
+  fi
+}
+trap fix_ownership EXIT
+
 echo "Creating project $APP_NAME..."
-mkdir -p "$APP_NAME"
-cd $APP_NAME
+mkdir -p "$PROJECT_DIR"
+cd "$PROJECT_DIR"
 
 echo "Starting the Django structure..."
 django-admin startproject core .
